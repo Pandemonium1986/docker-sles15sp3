@@ -7,11 +7,15 @@ ENV container=docker
 
 # Install openssh and python39
 RUN zypper install -y openssh-server \
-  python39
+  python39 && \
+  zypper clean --all
+
+WORKDIR "/usr/lib/systemd/system/sysinit.target.wants"
 
 # Install systemd -- See https://hub.docker.com/_/centos/
-RUN zypper install -y dbus-1 systemd-sysvinit && \
-  cd /usr/lib/systemd/system/sysinit.target.wants/; \
+RUN zypper install -y dbus-1 && \
+  systemd-sysvinit && \
+  zypper clean --all && \
   for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done ; \
   rm -f /usr/lib/systemd/system/multi-user.target.wants/* ; \
   rm -f /etc/systemd/system/*.wants/* ; \
