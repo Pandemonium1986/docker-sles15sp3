@@ -1,0 +1,27 @@
+---
+name: "Docker Workflow"
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - "*"
+  workflow_dispatch:
+
+jobs:
+  called-docker:
+    permissions:
+      contents: read
+      packages: write
+      statuses: write
+    name: "Called: Docker Build and Push Workflow"
+    uses: pandemonium1986/.github/.github/workflows/called-docker.yml@main
+    with:
+      docker-user: ${{ github.repository_owner }}
+      docker-image: ${{ github.event.repository.name }}
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
