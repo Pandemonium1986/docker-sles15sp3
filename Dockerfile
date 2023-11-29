@@ -1,4 +1,4 @@
-FROM opensuse/leap:15.3
+FROM opensuse/leap:15.5
 
 LABEL maintainer="Michael Maffait"
 LABEL org.opencontainers.image.source="https://github.com/Pandemonium1986/docker-sles15sp3"
