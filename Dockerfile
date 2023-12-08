@@ -13,6 +13,9 @@ RUN zypper install -y dbus-1 \
   python39 && \
   zypper clean --all
 
+# Update alternative
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 0
+
 # Remove systemd target
 WORKDIR /usr/lib/systemd/system/sysinit.target.wants
 RUN for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done ; \
