@@ -4,6 +4,13 @@ LABEL maintainer="Michael Maffait"
 LABEL org.opencontainers.image.source="https://github.com/Pandemonium1986/docker-sles15sp3"
 
 # Configure environment variables
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV PYTHONIOENCODING=utf8
+
+# Systemd configuration
+STOPSIGNAL SIGRTMIN+3
 ENV container=docker
 
 # Install dependencies
@@ -30,6 +37,6 @@ RUN for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done ; \
 
 WORKDIR /
 
-VOLUME ["/sys/fs/cgroup"]
+VOLUME [ "/tmp", "/run" ]
 
 CMD ["/usr/lib/systemd/systemd"]
